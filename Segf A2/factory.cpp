@@ -8,7 +8,7 @@ class Obstacle;
 class Factory {
 public:
     // ** TODO ** 
-    // Add your code here to make a virtual factdories for Map, Field and Obstacle.
+    // Add your code here to make a virtual factories for Map, Field and Obstacle.
 
     virtual Map* ProduceMap() = 0;
     virtual Field* ProduceField(const int) = 0;
