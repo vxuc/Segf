@@ -30,6 +30,8 @@ public:
         m_obstacle = obstacle;
         std::cout << "Added Obstacle" << std::endl;
     }
+
+    //for unit testing
     Field* GetField() {
         return m_field;
     }
@@ -89,6 +91,7 @@ Map* MergeMap::CreateMap(FactoryDesign& factory)
     return map;
 }
 
+//for unit testing
 Obstacle* MergeMap::CreateObstacle(FactoryDesign& factory)
 {
     Obstacle* new_obstacle = factory.ProduceObstacle();
@@ -96,6 +99,7 @@ Obstacle* MergeMap::CreateObstacle(FactoryDesign& factory)
     return new_obstacle;
 }
 
+//for unit testing
 Map* MergeMap::CreateField(FactoryDesign& factory, const int field_no)
 {
     Map* map = factory.ProduceMap();
@@ -104,18 +108,9 @@ Map* MergeMap::CreateField(FactoryDesign& factory, const int field_no)
     return map;
 }
 
-//int main(void)
-//{
-//    //field number variable
-//    const int field_no = 5;
-//
-//    //produce a new field and obstacle using a factory
-//    FactoryDesign factory;
-//    Field* m_field = factory.ProduceField(field_no);
-//    Obstacle* m_obstacle = factory.ProduceObstacle();
-//
-//    //create a new map and add the newly produced field and obstacle into the map
-//    Map* map = new Map();
-//    map->AddField(m_field);
-//    map->AddObstacle(m_obstacle);
-//}
+int main(void)
+{
+    FactoryDesign factory;
+    MergeMap mergeMap;
+    mergeMap.CreateMap(factory);
+}
