@@ -118,5 +118,21 @@ namespace UnitTest1
 			Assert::AreEqual(iAm, iAm2);
 		}
 
+		TEST_METHOD(PrototypeTest2)
+		{
+			//Prototype Test 1
+			int choice = -1;
+
+			//check for invalid choice input
+			try {
+				Action* action = Factory::do_action(choice);
+				string iAm = action->Iam();
+			}
+			catch (exception e)
+			{
+				//catch the exception and check if its catching the "invalid input"
+				Assert::AreEqual(e.what(), "Invalid Input");
+			}
+		}
 	};
 }

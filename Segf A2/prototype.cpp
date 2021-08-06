@@ -21,6 +21,7 @@ private:
 //int main() {
 //	vector<Action*> roles;
 //	int choice;
+//
 //	while (true)
 //	{
 //		cout << "(1)Batman (2)Superman (3)Ironman (0)Go: ";
