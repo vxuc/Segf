@@ -5,60 +5,79 @@ class Map;
 class Field;
 class Obstacle;
 
-class Factory {
+class FactoryDesign {
 public:
     // ** TODO ** 
     // Add your code here to make a virtual factories for Map, Field and Obstacle.
+    FactoryDesign() {};
 
-    virtual Map* ProduceMap() = 0;
-    virtual Field* ProduceField(const int) = 0;
-    virtual Obstacle* ProduceObstacle() = 0;
+    static Map* ProduceMap();
+    static Field* ProduceField(const int i);
+    static Obstacle* ProduceObstacle();
 };
 
-class Map : public Factory {
+class Map {
 private:
-    // ... 
+    Field* m_field;
+    Obstacle* m_obstacle;
 public:
-    Map() {};
-    Map* ProduceMap() override {
-        std::cout << "Producing map" << std::endl;
-    }
-    void AddField(Field*) { // Add the field into the map.  
+    Map() : m_field(nullptr), m_obstacle(nullptr) {};
+    void AddField(Field* field) { // Add the field into the map.
+        m_field = field;
         std::cout << "Added Field" << std::endl;
     }
-    void AddObstacle(Obstacle*) { // Add the obstacle into the map. 
+    void AddObstacle(Obstacle* obstacle) { // Add the obstacle into the map. 
+        m_obstacle = obstacle;
         std::cout << "Added Obstacle" << std::endl;
+    }
+    Field* GetField() {
+        return m_field;
+    }
+    Obstacle* GetObstacle() {
+        return m_obstacle;
     }
 };
 
-class Field : public Factory {
+class Field {
 private:
     int m_field_no;
 public:
-    Field(int n) : m_field_no(n) {};
-    Field* ProduceField(const int field_no) override {
-        m_field_no = field_no;
-        std::cout << "Producing field " << field_no << std::endl;
-    }
+    Field(int n) : m_field_no(n) { std::cout << "Field no: " << n << std::endl; };
+    int GetFieldNumber() { return m_field_no; }
 };
 
-class Obstacle : public Factory {
+class Obstacle {
 public:
     Obstacle() {};
-    Obstacle* ProduceObstacle() override {
-        std::cout << "Producing obstacle" << std::endl;
-    }
 };
 
-class MergeMap : public Factory {
+Map* FactoryDesign::ProduceMap()
+{
+    return new Map();
+}
+Field* FactoryDesign::ProduceField(const int i)
+{
+    return new Field(i);
+}
+Obstacle* FactoryDesign::ProduceObstacle()
+{
+    return new Obstacle();
+}
+
+class MergeMap {
 private:
-    // ... 
+    Obstacle* m_obstacle;
 public:
-    MergeMap() {};
-    Map* CreateMap(Factory& factory);
+    MergeMap() : m_obstacle(nullptr) {};
+    Map* CreateMap(FactoryDesign& factory);
+
+    Obstacle* CreateObstacle(FactoryDesign& factory);
+    Obstacle* GetObstacle() { return m_obstacle; }
+
+    Map* CreateField(FactoryDesign& factory, const int field_no);
 };
 
-Map* MergeMap::CreateMap(Factory& factory)
+Map* MergeMap::CreateMap(FactoryDesign& factory)
 {
     Map* map = factory.ProduceMap();
     Field* first_field = factory.ProduceField(1);
@@ -70,9 +89,33 @@ Map* MergeMap::CreateMap(Factory& factory)
     return map;
 }
 
-int main(void)
+Obstacle* MergeMap::CreateObstacle(FactoryDesign& factory)
 {
-    Factory* factory;
-    MergeMap* mergeMap;
-    mergeMap->CreateMap((*factory));
+    Obstacle* new_obstacle = factory.ProduceObstacle();
+    m_obstacle = new_obstacle;
+    return new_obstacle;
 }
+
+Map* MergeMap::CreateField(FactoryDesign& factory, const int field_no)
+{
+    Map* map = factory.ProduceMap();
+    Field* new_field = factory.ProduceField(field_no);
+    map->AddField(new_field);
+    return map;
+}
+
+//int main(void)
+//{
+//    //field number variable
+//    const int field_no = 5;
+//
+//    //produce a new field and obstacle using a factory
+//    FactoryDesign factory;
+//    Field* m_field = factory.ProduceField(field_no);
+//    Obstacle* m_obstacle = factory.ProduceObstacle();
+//
+//    //create a new map and add the newly produced field and obstacle into the map
+//    Map* map = new Map();
+//    map->AddField(m_field);
+//    map->AddObstacle(m_obstacle);
+//}

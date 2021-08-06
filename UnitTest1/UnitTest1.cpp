@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 #include "../Segf A2/singleton.cpp"
+#include "../Segf A2/factory.cpp"
 #include "../Segf A2/decorator.cpp"
 #include "../Segf A2/prototype.cpp"
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -41,6 +42,49 @@ namespace UnitTest1
 			int value2 = obj2->get_value();
 
 			Assert::AreEqual(value, value2);
+		}
+
+		TEST_METHOD(FactoryTest1)
+		{
+			//field number variable
+			const int field_no = 5;
+
+			//produce a new field and obstacle using a factory
+			FactoryDesign factory;
+			Field* m_field = factory.ProduceField(field_no);
+			Obstacle* m_obstacle = factory.ProduceObstacle();
+
+			//create a new map and add the newly produced field and obstacle into the map
+			Map* map = new Map();
+			map->AddField(m_field);
+			map->AddObstacle(m_obstacle);
+
+			//check whether the newly produced field and obstacle is equal to the field and obstacle added into the map
+			Assert::IsTrue(m_field == map->GetField());
+			Assert::IsTrue(m_obstacle == map->GetObstacle());
+		}
+
+		TEST_METHOD(FactoryTest2)
+		{
+			FactoryDesign factory;
+			MergeMap mergeMap;
+			Obstacle* obstacle = mergeMap.CreateObstacle(factory); //produce a new Obstacle
+			
+			//check whether the obstacle produced is the same
+			Assert::IsTrue(obstacle == mergeMap.GetObstacle());
+		}
+
+		TEST_METHOD(FactoryTest3)
+		{
+			//field number variable
+			const int field_no = 10;
+
+			//produce a new field
+			FactoryDesign factory;
+			Field* field = factory.ProduceField(field_no);
+
+			//check whether the produced field is the same field number as the variable
+			Assert::IsTrue(field_no == field->GetFieldNumber());
 		}
 		
 		TEST_METHOD(DecoratorTest1)
