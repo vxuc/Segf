@@ -132,6 +132,10 @@ namespace UnitTest1
 			Action* prototype2 = Factory::do_action(choice);
 			string IamString2 = prototype2->Iam();
 
+
+			//check if both prototypes are not equal
+			Assert::IsFalse(prototype == prototype2);
+
 			//check if both strings are equal
 			Assert::AreEqual(IamString, IamString2);
 		}
