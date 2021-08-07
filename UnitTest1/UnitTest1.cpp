@@ -14,33 +14,38 @@ namespace UnitTest1
 		
 		TEST_METHOD(SingletonTest1)
 		{
-			//Singleton Test 1
+			//create 2 new objs with the getInstance function
 			MyClass* obj1 = MyClass::GetInstance();
 			MyClass* obj2 = MyClass::GetInstance();
 
+			//check whether the 2 objs are the same
 			Assert::IsTrue(obj1 == obj2);
 		}
 
 		TEST_METHOD(SingletonTest2)
 		{
-			//Singleton Test 2
+			//create 2 new objs with func1 and func2 which returns the address of the new obj respectively
 			std::string str1 = func1();
 			std::string str2 = func2();
 
+			//check if the 2 objs have the same address
 			Assert::AreEqual(str1, str2);
 		}
 
 		TEST_METHOD(SingletonTest3)
 		{			
-			//Singleton Test 3
+			//create a new value variable
 			int value = 12;
 
+			//create a new obj with the getInstance function and set the value to the variable
 			MyClass* obj1 = MyClass::GetInstance();
 			obj1->set_value(value);
 
+			//create another new obj with the getInstance function and get use the get_value function to return its stored value
 			MyClass* obj2 = MyClass::GetInstance();
 			int value2 = obj2->get_value();
 
+			//check if the value variable is the same as the stored value
 			Assert::AreEqual(value, value2);
 		}
 
@@ -89,39 +94,51 @@ namespace UnitTest1
 		
 		TEST_METHOD(DecoratorTest1)
 		{			
-			//Decorator Test 1
+			//create a new base cake name and price variable
 			string baseCakeName = "Cake";
 			float baseCakePrice = 40;
+
+			//create a new base case with the cake name and price
 			Cake* baseCake = new BaseCake(baseCakeName, baseCakePrice);
+
+			//check whether the base cake name and price variable match the newly created base cake's name and price
 			Assert::AreEqual(baseCakeName, baseCake->Serve());
 			Assert::AreEqual(baseCakePrice, baseCake->price());
 
+			//create a new chocolate decorated cake using the initial base cake
 			Cake* decoratedCake = new ChocolateCake(baseCake);
 			string decoratedCakeName = baseCakeName + " decorated with Chocolate ";
+
+			//check whether the name of the new chocolate decorated cake name match the name of a default chocolate decorated cake
 			Assert::AreEqual(decoratedCakeName, decoratedCake->Serve());
 
+			//create a variable for the price of the chocolate decorated cake
 			float decoratedCakePrice = baseCakePrice + 40;
+
+			//check whether the price of the new chocolate decorated cake match the default chocolate decorated cake price
 			Assert::AreEqual(decoratedCakePrice, decoratedCake->price());
 		}
 		
 		TEST_METHOD(PrototypeTest1)
 		{
-			//Prototype Test 1
+			//choice variable
 			int choice = 1;
 
+			//get the default prototype in the choice position and use the Iam function to get the string name
 			Action* prototype = Factory::get_prototype(choice);
 			string IamString = prototype->Iam();
 
+			//create a new prototype with the do_action function and use the Iam function to get the string name as well
 			Action* prototype2 = Factory::do_action(choice);
 			string IamString2 = prototype2->Iam();
 
-
+			//check if both strings are equal
 			Assert::AreEqual(IamString, IamString2);
 		}
 
 		TEST_METHOD(PrototypeTest2)
 		{
-			//Prototype Test 1
+			//choice variable with invalid number
 			int choice = -1;
 
 			//check for invalid choice input
