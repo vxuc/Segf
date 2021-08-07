@@ -43,9 +43,9 @@ string func2(void)
     return ptr.str();
 }
 
-//int main(void)
-//{
-//    func1();
-//    func2();
-//    return 0;
-//}
+int main(void)
+{
+    func1();
+    func2();
+    return 0;
+}

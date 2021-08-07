@@ -18,27 +18,27 @@ private:
 	static Action* s_prototypes[4];
 };
 
-int main() {
-	vector<Action*> roles;
-	int choice;
-
-	while (true)
-	{
-		cout << "(1)Batman (2)Superman (3)Ironman (0)Go: ";
-		cin >> choice;
-		if (choice == 0)
-			break;
-		try {
-			roles.push_back(Factory::do_action(choice));
-		} catch (exception e) {
-			std::cout << e.what() << std::endl;
-		}
-	}
-	for (int i = 0; i < roles.size(); ++i)
-		roles[i]->Iam();
-	for (int i = 0; i < roles.size(); ++i)
-		delete roles[i];
-}
+//int main() {
+//	vector<Action*> roles;
+//	int choice;
+//
+//	while (true)
+//	{
+//		cout << "(1)Batman (2)Superman (3)Ironman (0)Go: ";
+//		cin >> choice;
+//		if (choice == 0)
+//			break;
+//		try {
+//			roles.push_back(Factory::do_action(choice));
+//		} catch (exception e) {
+//			std::cout << e.what() << std::endl;
+//		}
+//	}
+//	for (int i = 0; i < roles.size(); ++i)
+//		roles[i]->Iam();
+//	for (int i = 0; i < roles.size(); ++i)
+//		delete roles[i];
+//}
 
 class Batman : public Action {
 public:
