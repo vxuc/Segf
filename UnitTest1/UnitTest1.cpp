@@ -109,13 +109,14 @@ namespace UnitTest1
 			//Prototype Test 1
 			int choice = 1;
 
-			Action* action = Factory::do_action(choice);
-			string iAm = action->Iam();
+			Action* prototype = Factory::get_prototype(choice);
+			string IamString = prototype->Iam();
 
-			Action* action2 = Factory::get_prototype(choice);
-			string iAm2 = action2->Iam();
+			Action* prototype2 = Factory::do_action(choice);
+			string IamString2 = prototype2->Iam();
 
-			Assert::AreEqual(iAm, iAm2);
+
+			Assert::AreEqual(IamString, IamString2);
 		}
 
 		TEST_METHOD(PrototypeTest2)
